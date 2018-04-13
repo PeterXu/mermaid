@@ -191,6 +191,8 @@ export const addEdges = function(edges, g) {
     // Set link type for rendering
     if (edge.type === 'arrow_open') {
       edgeData.arrowhead = 'none';
+    } else if (edge.type === 'arrow_double') {
+      edgeData.arrowhead = 'double';
     } else {
       edgeData.arrowhead = 'normal';
     }
@@ -239,7 +241,7 @@ export const addEdges = function(edges, g) {
           edgeData.label = '<span class="edgeLabel">' + edge.text + '</span>';
         } else {
           edgeData.labelType = 'text';
-          edgeData.style = edgeData.style || 'stroke: #333; stroke-width: 1.5px;fill:none';
+          //yzxu:edgeData.style = edgeData.style || 'stroke: #333; stroke-width: 1.5px;fill:none';
           edgeData.label = edge.text.replace(/<br>/g, '\n');
         }
       } else {
@@ -373,6 +375,40 @@ export const draw = function(text, id) {
       .style('stroke-width', 1)
       .style('stroke-dasharray', '1,0');
   };
+
+  render.arrows().double = function normal (parent, id, edge, type) {
+    const marker = parent.append('marker')
+      .attr('id', id)
+      .attr('viewBox', '0 0 10 10')
+      .attr('refX', 9)
+      .attr('refY', 5)
+      .attr('markerUnits', 'strokeWidth')
+      .attr('markerWidth', 8)
+      .attr('markerHeight', 6)
+      .attr('orient', 'auto')
+
+    marker.append('path')
+      .attr('d', 'M 0 0 L 10 5 L 0 10 z')
+      .attr('class', 'arrowheadPath')
+      .style('stroke-width', 1)
+      .style('stroke-dasharray', '1,0')
+
+    const markerx = parent.append('marker')
+      .attr('id', id + 'x')
+      .attr('viewBox', '0 0 10 10')
+      .attr('refX', 9)
+      .attr('refY', 5)
+      .attr('markerUnits', 'strokeWidth')
+      .attr('markerWidth', 8)
+      .attr('markerHeight', 6)
+      .attr('orient', '270deg')
+
+    markerx.append('path')
+      .attr('d', 'M 0 0 L 10 5 L 0 10 z')
+      .attr('class', 'arrowheadPath')
+      .style('stroke-width', 1)
+      .style('stroke-dasharray', '1,0')
+  }
 
   // Set up an SVG group so that we can translate the final graph.
   const svg = d3.select(`[id="${id}"]`);

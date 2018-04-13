@@ -42,6 +42,7 @@
 "*"                   return 'MULT';
 \s*\-\-[x]\s*            return 'ARROW_CROSS';
 \s*\-\-\>\s*             return 'ARROW_POINT';
+\s*\-\>\>\s*             return 'ARROW_DOUBLE';
 \s*\<\-\-\>\s*           return 'DOUBLE_ARROW_POINT';
 \s*[x]\-\-[x]\s*         return 'DOUBLE_ARROW_CROSS';
 \s*[o]\-\-[o]\s*         return 'DOUBLE_ARROW_CIRCLE';
@@ -58,6 +59,7 @@
 \s*\-\-\-\s*             return 'ARROW_OPEN';
 \s*\-\.\-[x]\s*          return 'DOTTED_ARROW_CROSS';
 \s*\-\.\-\>\s*           return 'DOTTED_ARROW_POINT';
+\s*\-\.\>\>\s*           return 'DOTTED_ARROW_DOUBLE';
 \s*\-\.\-[o]\s*          return 'DOTTED_ARROW_CIRCLE';
 \s*\-\.\-\s*             return 'DOTTED_ARROW_OPEN';
 \s*.\-[x]\s*             return 'DOTTED_ARROW_CROSS';
@@ -66,6 +68,7 @@
 \s*\.\-\s*               return 'DOTTED_ARROW_OPEN';
 \s*\=\=[x]\s*            return 'THICK_ARROW_CROSS';
 \s*\=\=\>\s*             return 'THICK_ARROW_POINT';
+\s*\=\>\>\s*             return 'THICK_ARROW_DOUBLE';
 \s*\=\=[o]\s*            return 'THICK_ARROW_CIRCLE';
 \s*\=\=[\=]\s*           return 'THICK_ARROW_OPEN';
 \s*\<\-\-\s*             return 'START_DOUBLE_ARROW_POINT';
@@ -371,6 +374,8 @@ link: linkStatement arrowText
         {$$ = {"type":"double_arrow_cross","stroke":"normal","text":$2};}
     | '--' text ARROW_OPEN
         {$$ = {"type":"arrow_open","stroke":"normal","text":$2};}
+    | '->' text ARROW_DOUBLE
+        {$$ = {"type":"arrow_double","stroke":"normal","text":$2};}
     | '-.' text DOTTED_ARROW_POINT
         {$$ = {"type":"arrow","stroke":"dotted","text":$2};}
     | 'START_DOUBLE_DOTTED_ARROW_POINT' text DOTTED_ARROW_POINT
@@ -385,6 +390,8 @@ link: linkStatement arrowText
         {$$ = {"type":"double_arrow_cross","stroke":"dotted","text":$2};}
     | '-.' text DOTTED_ARROW_OPEN
         {$$ = {"type":"arrow_open","stroke":"dotted","text":$2};}
+    | '-.' text DOTTED_ARROW_DOUBLE
+        {$$ = {"type":"arrow_double","stroke":"dotted","text":$2};}
     | '==' text THICK_ARROW_POINT
         {$$ = {"type":"arrow","stroke":"thick","text":$2};}
     | 'START_DOUBLE_THICK_ARROW_POINT' text THICK_ARROW_POINT
@@ -399,6 +406,8 @@ link: linkStatement arrowText
         {$$ = {"type":"double_arrow_cross","stroke":"thick","text":$2};}
     | '==' text THICK_ARROW_OPEN
         {$$ = {"type":"arrow_open","stroke":"thick","text":$2};}
+    | '=>' text THICK_ARROW_DOUBLE
+        {$$ = {"type":"arrow_double","stroke":"thick","text":$2};}
     ;
 
 linkStatement: ARROW_POINT
@@ -415,6 +424,8 @@ linkStatement: ARROW_POINT
         {$$ = {"type":"double_arrow_cross","stroke":"normal"};}
     | ARROW_OPEN
         {$$ = {"type":"arrow_open","stroke":"normal"};}
+    | ARROW_DOUBLE
+        {$$ = {"type":"arrow_double","stroke":"normal"};}
     | DOTTED_ARROW_POINT
         {$$ = {"type":"arrow","stroke":"dotted"};}
     | DOUBLE_DOTTED_ARROW_POINT
@@ -429,6 +440,8 @@ linkStatement: ARROW_POINT
         {$$ = {"type":"double_arrow_cross","stroke":"dotted"};}
     | DOTTED_ARROW_OPEN
         {$$ = {"type":"arrow_open","stroke":"dotted"};}
+    | DOTTED_ARROW_DOUBLE
+        {$$ = {"type":"arrow_double","stroke":"dotted"};}
     | THICK_ARROW_POINT
         {$$ = {"type":"arrow","stroke":"thick"};}
     | DOUBLE_THICK_ARROW_POINT
@@ -443,6 +456,8 @@ linkStatement: ARROW_POINT
         {$$ = {"type":"double_arrow_cross","stroke":"thick"};}
     | THICK_ARROW_OPEN
         {$$ = {"type":"arrow_open","stroke":"thick"};}
+    | THICK_ARROW_DOUBLE
+        {$$ = {"type":"arrow_double","stroke":"thick"};}
         ;
 
 arrowText:
@@ -574,5 +589,5 @@ alphaNumToken  : PUNCTUATION | UNICODE_TEXT | NUM| ALPHA | COLON | COMMA | PLUS 
 
 idStringToken  : ALPHA|UNDERSCORE |UNICODE_TEXT | NUM|  COLON | COMMA | PLUS | MINUS | DOWN |EQUALS | MULT | BRKT | DOT | PUNCTUATION;
 
-graphCodeTokens:  TRAPSTART | TRAPEND | INVTRAPSTART | INVTRAPEND | PIPE | PS | PE | SQS | SQE | DIAMOND_START | DIAMOND_STOP | TAGSTART | TAGEND | ARROW_CROSS | ARROW_POINT | ARROW_CIRCLE | ARROW_OPEN | QUOTE | SEMI ;
+graphCodeTokens:  TRAPSTART | TRAPEND | INVTRAPSTART | INVTRAPEND | PIPE | PS | PE | SQS | SQE | DIAMOND_START | DIAMOND_STOP | TAGSTART | TAGEND | ARROW_CROSS | ARROW_POINT | ARROW_CIRCLE | ARROW_OPEN | ARROW_DOUBLE | QUOTE | SEMI ;
 %%
