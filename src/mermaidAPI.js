@@ -42,7 +42,7 @@ import pieParser from './diagrams/pie/parser/pie';
 import pieDb from './diagrams/pie/pieDb';
 
 const themes = {};
-for (const themeName of ['default', 'forest', 'dark', 'neutral']) {
+for (const themeName of ['default', 'forest', 'dark', 'neutral', 'sky']) {
   themes[themeName] = require(`./themes/${themeName}/index.scss`);
 }
 
@@ -672,16 +672,17 @@ function initialize(options) {
   setLogLevel(config.logLevel);
 }
 
-// function getConfig () {
-//   console.warn('get config')
-//   return config
-// }
+function getConfigX () {
+   //console.warn('get config')
+   return config
+}
 
 const mermaidAPI = {
   render,
   parse,
   initialize,
-  getConfig
+  getConfig,
+  getConfigX
 };
 
 export default mermaidAPI;
